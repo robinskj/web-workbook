@@ -9,7 +9,7 @@ var board = $('div[data-cell]');
 
 $('div[data-cell]').click(function() {
     var box = $(this);
-    var isBoxFilled = checkBoxForPrevTurn(this.innerHTML);
+    var isBoxFilled = checkBoxForPrevTurn(this);
     if(isBoxFilled) {
       alert("Box is filled!  Choose another one!!");
     } else {
@@ -23,7 +23,7 @@ $('div[data-cell]').click(function() {
   });
 
   function checkBoxForPrevTurn(box) {
-    if (box.text === 'X' || box.text === 'O')
+    if (box.innerHTML === 'X' || box.innerHTML === 'O')
       return true;
     else
       return false;
@@ -43,6 +43,31 @@ $('div[data-cell]').click(function() {
     // insert code here to check the current pattern
     // against the board
 
+    // check first horizontal row
+    if (board[0].innerHTML === pattern &&
+      board[1].innerHTML === pattern &&
+       board[2].innerHTML === pattern) {
+      return true;
+    // 2nd row
+    } else if (board[3].innerHTML === pattern && board[4].innerHTML === pattern && board[5].innerHTML === pattern) {
+      return true;
+    // 3rd row
+    } else if (board[6].innerHTML === pattern && board[7].innerHTML === pattern && board[8].innerHTML === pattern) {
+      return true;
+    // diagonals
+    } else if (board[0].innerHTML === pattern && board[4].innerHTML === pattern && board[8].innerHTML === pattern) {
+      return true;
+    } else if (board[2].innerHTML === pattern && board[4].innerHTML === pattern && board[6].innerHTML === pattern) {
+      return true;
+    // columns
+    } else if (board[0].innerHTML === pattern && board[3].innerHTML === pattern && board[6].innerHTML === pattern) {
+      return true;
+    } else if (board[1].innerHTML === pattern && board[4].innerHTML === pattern && board[7].innerHTML === pattern) {
+      return true;
+    } else if (board[2].innerHTML === pattern && board[5].innerHTML === pattern && board[8].innerHTML === pattern) {
+      return true;
+    }
+    // nothing matched
     return false;
   }
 
@@ -64,9 +89,15 @@ $('div[data-cell]').click(function() {
 
   function reset() {
     // change the player to 1
+    player = 1;
     // clear the innerHTML for all nodes in the board
-    // write a click function also...
+    for (let i= 0; i<9; i++){
+      board[i].innerHTML='';
+    }
   }
 
+  $('#clear').click(function() {
+    reset();
+  })
 
 });
